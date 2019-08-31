@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://www.paypalobjects.com/js/external/dg.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Boxy Mama Shopping Cart</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <script
+    src="https://www.paypal.com/sdk/js?client-id=AYRpxXTWHE1232poRl6YjV-oSdiggqlaHCQwqJ4DmTpubZj-kqx0oDJDqcP8taLNbKk4AyqlbjkePKn6&currency=USD">
+    </script>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                    intent: "CAPTURE",
+                  purchase_units: [{
+                    amount: {
+                      value: '49.95'
+                    },
+                    description : "Boxy Mama Halloween Gift Box"
+                  }],
+                  shipping: {
+                      detail: {
+                          name: {
+                              full_name : "{{order.first_name}} {{order.last_name}}"
+                          },
+                          address: {
+                              address_line_1 : "{{address.street_address}}",
+                              address_line_2 : "{{address.street_address2}}",
+                              postal_code : "{{address.zip_code}}",
+                              country_code : "US",
+                          }
+                      }
+                  }
+                });
+              }
+            }).render('#paypal-button-container');
+          </script>
+</head>
+<body>
+    <div class="wrapper">
+    <a class="homelink" href="/">Back</a>
+    <header>
+        <img class=logoimg src="{% static 'main/img/logowhite.jpg' %}" alt="#">
+    </header>
+        <div class="main_content">
+            <h2>Shopping Cart Information</h2>
+            <div class="cart_info">
+                <p>Recipient Name: {{order.first_name}} {{order.last_name}}</p>
+
+                        <p>Recipient Street Address: {{address.street_address}}</p>
+                        <p>Recipient Secondary Address: {{address.address_2}}</p>
+                        <p>Recipient Apartment Number: {{address.apt}}</p>
+                        <p>Recipient City: {{address.city}}</p>
+                        <p>Recipient State: {{address.state}}</p>
+                        <p>Recipient ZipCode: {{address.zip_code}}</p>
+                        <p>Recipient Country: {{address.country}}</p>
+
+                <p>Sender Email: {{order.email}}</p>
+                <a href="/order/edit/{{order.id}}/">Edit Information</a>
+
+                <p class="pp1">PayPal Link for Purchase Below!</p>
+                <div class="paypaypay" id="paypal-button-container"></div>
+
+                <!-- <form action="https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard">
+                    <label for="buy">Buy Now:</label>
+                    <input type="image" id="submitBtn" value="Pay with PayPal" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif">
+                    <input id="type" type="hidden" name="expType" value="light">
+                    <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
+                    </form>
+                    
+                    <script type="text/javascript" charset="utf-8">
+                    var embeddedPPFlow = new PAYPAL.apps.DGFlow({trigger: 'submitBtn'});
+                    </script> -->
+                
+                <!-- <form class="purchase_form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="SD57FB6A22KU8">
+                    <table>
+                    <tr><td><input type="hidden" name="on0" value="Leave a Comment for Boxy Mama:">Leave a Comment for Boxy Mama:</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+                    </table>
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form> -->
+                    
+                
+                <!-- <form class="purchase_form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="WVLXUGFJUXCKU">
+                    <table>
+                    <tr><td><input type="hidden" name="on0" value="Comment for the Boxy Mama:">Comment for the Boxy Mama:</td></tr><tr><td><input type="text" name="os0" maxlength="200"></td></tr>
+                    </table>
+                    <input class="paypalinput" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form> -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

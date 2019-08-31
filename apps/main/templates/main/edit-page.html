@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Order</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <a class="homelink" href="/">Back</a>
+        <header>
+            <img class=logoimg src="{% static 'main/img/logowhite.jpg' %}" alt="#">
+        </header>
+        {% if messages %}
+        <div class="errormessages">
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+            <div class="form_div">
+                <form class="order_form" action="/order" method="POST">
+                    {% csrf_token %}
+                    {% for order_info in order %}
+                        <h1 class="order_form_head">EDIT Halloween Box Order Form</h1>
+                        <label for=""> <span class="recipient" > RECIPIENT's </span>First Name: (THIS WILL APPEAR ON INSIDE OF BOX)</label>
+                        <input type="text" value="{{order_info.first_name}}" name="first_name" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's </span>Last Name:</label>
+                        <input type="text" value="{{order_info.first_name}}" name="last_name" id="">
+                    {% endfor %}
+                    {% for address_info in address %}
+                        <label for=""> <span class="recipient">RECIPIENT's </span>Street Address:</label>
+                        <input type="text" value="{{address_info.street_address}}" name="street_address" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's</span> Secondary Address:</label>
+                        <input type="text" name="street_address2" value="{{address_info.street_address2}}" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's </span>Apartment #:</label>
+                        <input type="text" value="{{address_info.apt}}" name="apt_num" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's</span> City:</label>
+                        <input type="text" value="{{address_info.city}}" name="city" id="">
+                        <label for=""><span class="recipient">RECIPIENT's</span> State:</label>
+                        <input type="text" value="{{address_info.state}}" name="state" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's</span> Country:</label>
+                        <input type="text" value="{{address_info.country}}" name="country" id="">
+                        <label for=""> <span class="recipient">RECIPIENT's</span> ZipCode:</label>
+                        <input type="text" value="{{address_info.zip_code}}" name="zip" id="">
+                    {% endfor %}
+                    {% for order_info in order %}
+                        <label id="note_label" for="">Personalized Note for your loved one: (Included in Box)</label>
+                        <input id="note_input" type="text" value="{{order_info.note}}" name="note" id="">
+                        <label for=""><span class="you">YOUR </span>Email: </label>
+                        <input type="email" value="{{order_info.email}}" name="email" id="">
+                    {% endfor %}
+                    <div class="button_div">
+                        
+                        <button class="order_button2" type="submit">ADD BOX TO CART</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
